@@ -171,9 +171,9 @@ function startGame(){
   const player = {
     x: 0, y: 0,
     vx: 0, vy: 0,
-    speed: 320,
+    speed: 4320,
     friction: 0.80,
-    w: 48, h: 72,
+    w: 220, h: 150,
     facing: 1
   };
 
