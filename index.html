@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Mars — Виживання на Червоній Планеті</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- MENU -->
+<div id="menu">
+  <div class="menu-scene">
+    <div class="menu-bg" style=""></div>
+    <canvas class="stars-canvas" id="starsCanvas"></canvas>
+    <div class="dark-strip"></div>
+    <div class="scanlines"></div>
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+
+    <div class="left-panel">
+      <div class="panel-label">Місія</div>
+      <div class="panel-stat">Статус <span>ACTIVE</span></div>
+      <div class="panel-stat">Дата <span>2045-03-21</span></div>
+      <div class="panel-stat">Зона <span>MARS-B4</span></div>
+      <div class="panel-stat">Сигнал <span>87%</span></div>
+    </div>
+
+    <div class="menu-text">
+      <div class="panel-label" style="text-align:center">Проєкт</div>
+      <h1>Марс:<br>Таємниці<br>Червоної<br>Планети</h1>
+      <div class="menu-divider"></div>
+      <p>Четверта від Сонця планета. Місія розпочата. Ваше завдання — знайти та відкалібрувати марсоходи.</p>
+      <button class="start-btn" id="startBtn">&#9654; Почати гру про марс</button>
+    </div>
+
+    <div class="mars-orb">
+      <img src="Mars.png">
+    </div>
+  </div>
+</div>
+
+<!-- ROCKET — реальне зображення raketa.webp -->
+<div id="rocket-screen">
+  <img src="raketa.webp">
+</div>
+
+<!-- INSTRUCTIONS -->
+<div id="instructions-screen">
+  <div class="instr-box">
+
+    <div class="instr-corner instr-tl"></div>
+    <div class="instr-corner instr-tr"></div>
+    <div class="instr-corner instr-bl"></div>
+    <div class="instr-corner instr-br"></div>
+
+    <div class="instr-label">Брифінг місії</div>
+    <h2 class="instr-title">Як грати</h2>
+    <div class="instr-divider"></div>
+
+    <div class="instr-grid">
+
+      <div class="instr-card">
+        <div class="instr-icon">
+          <!-- WASD / стрілки -->
+          <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <rect x="22" y="2"  width="16" height="16" rx="3" fill="none" stroke="#c1440e" stroke-width="1.5"/>
+            <text x="30" y="14" text-anchor="middle" fill="#c1440e" font-size="10" font-family="monospace">W</text>
+            <rect x="2"  y="22" width="16" height="16" rx="3" fill="none" stroke="#c1440e" stroke-width="1.5"/>
+            <text x="10" y="34" text-anchor="middle" fill="#c1440e" font-size="10" font-family="monospace">A</text>
+            <rect x="22" y="22" width="16" height="16" rx="3" fill="none" stroke="#c1440e" stroke-width="1.5"/>
+            <text x="30" y="34" text-anchor="middle" fill="#c1440e" font-size="10" font-family="monospace">S</text>
+            <rect x="42" y="22" width="16" height="16" rx="3" fill="none" stroke="#c1440e" stroke-width="1.5"/>
+            <text x="50" y="34" text-anchor="middle" fill="#c1440e" font-size="10" font-family="monospace">D</text>
+            <text x="30" y="55" text-anchor="middle" fill="rgba(240,236,228,0.5)" font-size="7" font-family="monospace">або стрілки</text>
+          </svg>
+        </div>
+        <div class="instr-card-title">Рух</div>
+        <div class="instr-card-text">Пересувайся по поверхні Марсу в пошуках марсоходів</div>
+      </div>
+
+      <div class="instr-card">
+        <div class="instr-icon">
+  
+          <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="12" width="36" height="36" rx="5" fill="none" stroke="#c1440e" stroke-width="1.5"/>
+            <text x="30" y="37" text-anchor="middle" fill="#c1440e" font-size="22" font-family="monospace" font-weight="bold">E</text>
+            <text x="30" y="55" text-anchor="middle" fill="rgba(240,236,228,0.5)" font-size="7" font-family="monospace">interact</text>
+          </svg>
+        </div>
+        <div class="instr-card-title">Взаємодія</div>
+        <div class="instr-card-text">Підійди до марсохода і натисни E щоб розпочати калібрування</div>
+      </div>
+
+      <div class="instr-card">
+        <div class="instr-icon">
+          <!-- 1-100 число -->
+          <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="14" width="52" height="28" rx="4" fill="none" stroke="#c1440e" stroke-width="1.5"/>
+            <text x="30" y="34" text-anchor="middle" fill="#fff" font-size="16" font-family="monospace" font-weight="bold">???</text>
+            <text x="30" y="55" text-anchor="middle" fill="rgba(240,236,228,0.5)" font-size="7" font-family="monospace">1 — 100</text>
+          </svg>
+        </div>
+        <div class="instr-card-title">Вгадай число</div>
+        <div class="instr-card-text">Знайди секретний код від 1 до 100 за 10 спроб. Підказки «більше» / «менше» допоможуть</div>
+      </div>
+
+      <div class="instr-card">
+        <div class="instr-icon">
+          <!-- зелена галочка / червоний хрест -->
+          <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="30" r="12" fill="none" stroke="#00ff88" stroke-width="1.5"/>
+            <text x="20" y="35" text-anchor="middle" fill="#00ff88" font-size="14" font-family="monospace">✓</text>
+            <circle cx="42" cy="30" r="12" fill="none" stroke="#ff3333" stroke-width="1.5"/>
+            <text x="42" y="35" text-anchor="middle" fill="#ff3333" font-size="14" font-family="monospace">✕</text>
+            <text x="30" y="55" text-anchor="middle" fill="rgba(240,236,228,0.5)" font-size="7" font-family="monospace">успіх / провал</text>
+          </svg>
+        </div>
+        <div class="instr-card-title">Результат</div>
+        <div class="instr-card-text">Вгадав — марсохід відкалібровано (зелений). Вичерпав спроби — помилка (червоний)</div>
+      </div>
+
+    </div>
+
+    <div class="instr-divider"></div>
+    <div class="instr-goal">Мета: відкалібруй якомога більше марсоходів!</div>
+
+    <button class="instr-btn" id="instrStartBtn">&#9654;&nbsp; Розпочати місію</button>
+  </div>
+</div>
+
+<!-- GAME -->
+<div id="game-container">
+  <canvas id="gameCanvas"></canvas>
+
+  <!--
+    ВСІ КАРТИНКИ В HTML — inline SVG як data URI у прихованих img.
+    Script.js читає їх через document.getElementById і малює на canvas.
+  -->
+
+  <!-- Гравець (космонавт) — замість pleyer.png -->
+  <img id="playerImage" hidden alt="player"
+    src="pleyer.png">
+
+  <!-- Марсохід — замість marsothit.png -->
+  <img id="roverImage" hidden alt="rover"
+    src="marsothit.png">
+</div>
+
+<!-- HUD -->
+<div id="hud" style="display:none">
+  <div class="hud-panel">
+    <div class="label">Координати</div>
+    <div class="value" id="hudCoords">X: 0 Y: 0</div>
+    <div class="label" style="margin-top:4px">FPS</div>
+    <div class="value" id="hudFps">60</div>
+  </div>
+  <div class="hud-center">PROJECT MARS &mdash; ROVER 01</div>
+  <div class="hud-panel" style="text-align:right">
+    <div class="label">Марсоходи</div>
+    <div class="value" id="hudRovers">0</div>
+    <div class="label" style="margin-top:4px">Відкалібровано</div>
+    <div class="value" id="hudCalibrated">0</div>
+  </div>
+</div>
+
+<!-- INTERACTION HINT -->
+<div id="hint">[ E ] Відкалібрувати марсохід</div>
+
+<!-- MINIGAME -->
+<div id="minigame">
+  <div class="mg-window">
+    <div class="mg-header">
+      <span class="mg-title">Калібрування &mdash; Марсохід</span>
+      <span class="mg-status-dot" id="mgDot"></span>
+    </div>
+    <div class="mg-body">
+      <div class="mg-desc">
+        Введіть секретний код (1&ndash;100).<br>
+        Підказки допоможуть знайти число за 10 спроб.
+      </div>
+      <div class="mg-number-display" id="mgDisplay">???</div>
+      <div class="mg-input-row">
+        <input class="mg-input" id="mgInput" type="number" min="1" max="100" placeholder="1–100">
+      </div>
+      <div class="mg-btn-row">
+        <button class="mg-btn more" id="mgMore">&#9650; Більше</button>
+        <button class="mg-btn guess" id="mgGuess">&#10003; Вгадати</button>
+        <button class="mg-btn less" id="mgLess">&#9660; Менше</button>
+      </div>
+      <div class="mg-attempts" id="mgAttempts">Спроб: 0 / 10</div>
+      <div class="mg-feedback" id="mgFeedback"></div>
+      <button class="mg-close" id="mgClose">&#10005; Закрити</button>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE CONTROLS -->
+<div id="mobile-controls">
+  <div class="dpad">
+    <button class="dpad-btn dpad-up" data-key="arrowup">&#9650;</button>
+    <button class="dpad-btn dpad-left" data-key="arrowleft">&#9668;</button>
+    <div class="dpad-center"></div>
+    <button class="dpad-btn dpad-right" data-key="arrowright">&#9658;</button>
+    <button class="dpad-btn dpad-down" data-key="arrowdown">&#9660;</button>
+  </div>
+  <button class="interact-btn" id="interactBtn">E</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
